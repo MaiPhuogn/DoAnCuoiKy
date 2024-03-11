@@ -1,0 +1,68 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace BidaTableManagement
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var bidaTableManagement = new BidaTableManagement();
+
+            // Quản lý thông tin bàn bida
+            bidaTableManagement.AddBidaTable(new BidaTable { Id = 1, Type = BidaTableType.Hole, PricePerHour = 45000 });
+            bidaTableManagement.AddBidaTable(new BidaTable { Id = 2, Type = BidaTableType.Phang, PricePerHour = 60000 });
+
+            // Quản lý thông tin nhân viên
+            bidaTableManagement.AddEmployee(new Employee { Id = 1, Position = EmployeePosition.Barista, Salary = 500000 });
+            bidaTableManagement.AddEmployee(new Employee { Id = 2, Position = EmployeePosition.Waiter, Salary = 300000 });
+            bidaTableManagement.AddEmployee(new Employee { Id = 3, Position = EmployeePosition.Security, Salary = 400000 });
+            bidaTableManagement.AddEmployee(new Employee { Id = 4, Position = EmployeePosition.Cashier, Salary = 350000 });
+
+            // Quản lý các dịch vụ
+            bidaTableManagement.AddService(new Service { Id = 1, Name = "Đồ uống", Price = 50000 });
+            bidaTableManagement.AddService(new Service { Id = 2, Name = "Thức ăn nhanh", Price = 100000 });
+
+            // Tính tiền bàn theo số giờ chơi
+            var bill = bidaTableManagement.CalculateBill(1, 1, 2, new List<int> { 1, 2 });
+            Console.WriteLine($"Tổng tiền: {bill.TotalAmount} VNĐ");
+
+            // Mỗi một lần bảo hành, chi phí cho 1 bàn là 200.000 VNĐ và phụ thu nếu có
+            var maintenanceCost = bidaTableManagement.CalculateMaintenanceCost(1, 1);
+            Console.WriteLine($"Chi phí bảo trì: {maintenanceCost} VNĐ");
+
+            // Tạo báo cáo, thống kê doanh thu theo thời gian và theo từng loại bàn
+            var report = bidaTableManagement.GenerateReport(DateTime.Now.AddDays(-30), DateTime.Now);
+            Console.WriteLine($"Doanh thu trong khoảng thời gian: {report.TotalRevenue} VNĐ");
+            Console.WriteLine($"Doanh thu bàn lỗ: {report.HoleTableRevenue} VNĐ");
+            Console.WriteLine($"Doanh thu bàn phăng: {report.PhangTableRevenue} VNĐ");
+        }
+    }
+
+    public class BidaTableManagement
+    {
+        private List<BidaTable> _bidaTables;
+        private List<Employee> _employees;
+        private List<Service> _services;
+
+        public BidaTableManagement()
+        {
+            _bidaTables = new List<BidaTable>();
+            _employees = new List<Employee>();
+            _services = new List<Service>();
+        }
+
+        public void AddBidaTable(BidaTable bidaTable)
+        {
+            _bidaTables.Add(bidaTable);
+        }
+
+        public void AddEmployee(Employee employee)
+        {
+            _employees.Add(employee);
+        }
+
+        public void AddService(Service service)
+        {
+            _
